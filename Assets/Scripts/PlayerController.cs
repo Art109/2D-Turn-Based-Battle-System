@@ -1,18 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // Start is called before the first frame update
-
+    
+    public static PlayerController instance { get; private set; }
 
     float speed = 3;
     bool isWalking = false;
     Rigidbody2D rb;
     Animator animator;
     float direction;
+
+    private void Awake()
+    {
+        if(instance != null && instance != this)
+            Destroy(gameObject);
+        else
+            instance = this;
+    }
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -27,7 +36,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-
+    #region "Player Control"
     void Movement()
     {
         float moveX = Input.GetAxisRaw("Horizontal");
@@ -60,4 +69,8 @@ public class PlayerController : MonoBehaviour
         
 
     }
+    #endregion
+
+
+        
 }
