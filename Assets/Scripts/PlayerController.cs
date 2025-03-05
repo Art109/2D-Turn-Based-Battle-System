@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     
-    public static PlayerController instance { get; private set; }
+    public static PlayerController Instance { get; private set; }
 
     float speed = 3;
     bool isWalking = false;
@@ -17,10 +17,10 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        if(instance != null && instance != this)
+        if(Instance != null && Instance != this)
             Destroy(gameObject);
         else
-            instance = this;
+            Instance = this;
     }
     void Start()
     {
