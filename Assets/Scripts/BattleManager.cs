@@ -4,26 +4,50 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
-    public List<Character> characters;
+    public static BattleManager Instance;
+
+    public List<Character> characters = new List<Character>();
     int currentTurnIndex = 0;
 
-    private void Start()
+    bool isBattleActive = false;
+
+
+    private void Awake()
     {
-        //characters.Sort(a,b) => b.speed.CompareTo(a.speed));
+        if(Instance != null && Instance != this)
+            Destroy(gameObject);
+        else
+            Instance = this;
+    }
+
+
+    public void StartBattle(List<Character> participants)
+    {
+        if (isBattleActive) return;
+
+        isBattleActive = true;
+        characters = new List<Character>(participants);
+
         StartTurn();
     }
 
     void StartTurn()
     {
-        if(characters.Count == 0) return;
-        Character currentCharacter = characters[currentTurnIndex];
-        currentCharacter.TakeTurn(this);
+        
+            if (characters.Count == 0) return;
+            Character currentCharacter = characters[currentTurnIndex];
+            currentCharacter.TakeTurn(this);
     }
 
     public void EndTurn()
     {
         currentTurnIndex = (currentTurnIndex +1) % characters.Count;
         StartTurn();
+
+    }
+
+    public void EndBattle()
+    {
 
     }
 }
