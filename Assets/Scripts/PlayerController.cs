@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     
     public static PlayerController Instance { get; private set; }
 
+    PlayerCharacter playerUnit;
+    public PlayerCharacter PlayerUnit { get { return playerUnit; } private set { playerUnit = value; } }
+
     float speed = 3;
     bool isWalking = false;
     Rigidbody2D rb;
@@ -26,6 +29,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        PlayerUnit = GetComponent<PlayerCharacter>();
         direction = 1;
     }
 

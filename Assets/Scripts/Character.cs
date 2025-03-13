@@ -10,4 +10,9 @@ public abstract class Character : MonoBehaviour
     [SerializeField] List<Skill> skills;
 
     public virtual void TakeTurn(BattleManager battleManager) { }
+
+    public void TakeDamage(int damage) 
+    {
+        hp -= damage;
+    }
 }

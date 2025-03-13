@@ -11,6 +11,7 @@ public class BattleManager : MonoBehaviour
 
     bool isBattleActive = false;
 
+    [SerializeField] EnemyCharacter enemyTest;
 
     private void Awake()
     {
@@ -20,13 +21,27 @@ public class BattleManager : MonoBehaviour
             Instance = this;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            List<Character> enemy = new List<Character>();
+            enemy.Add(enemyTest);    
+            StartBattle(enemy);
+        }
+    }
+
 
     public void StartBattle(List<Character> participants)
     {
         if (isBattleActive) return;
 
         isBattleActive = true;
-        characters = new List<Character>(participants);
+        characters.Add(PlayerController.Instance.PlayerUnit);
+        foreach (Character character in participants)
+        {
+            characters.Add(character);
+        }
 
         StartTurn();
     }
@@ -50,4 +65,5 @@ public class BattleManager : MonoBehaviour
     {
 
     }
+
 }
