@@ -33,20 +33,32 @@ public class BattleUIManager : MonoBehaviour
 
     public void UpdateUI(Character character) 
     {
-        DesactiveUI();
+        DeactiveUI();
         if (character is PlayerCharacter)
         {
             playerOptionsBox.SetActive(true);
-            playerHUD.SetActive(true);
-            battleTextPanel.SetActive(true);
+            
         }
-        else if (character is EnemyCharacter) 
-        { 
-            battleTextPanel.SetActive(true) ;
-        }
+        playerHUD.SetActive(true);
+        battleTextPanel.SetActive(true);
     }
 
-    public void DesactiveUI()
+    public void ActionSelectionAnimation(int index)
+    {
+        foreach (var option in playerOptions)
+        { 
+            option.color = Color.white;
+        }
+
+        playerOptions[index].color = Color.black;
+    }
+
+    public void UpdatePlayerActions(PlayerCharacter character)
+    {
+
+    }
+
+    public void DeactiveUI()
     {
         playerOptionsBox.SetActive(false);
         playerHUD.SetActive(false);

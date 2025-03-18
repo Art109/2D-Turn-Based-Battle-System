@@ -13,15 +13,8 @@ public class PlayerCharacter : Character
 
     public override void TakeTurn(BattleManager battleManager)
     {
-        StartCoroutine(Attack());
+        PlayerController.Instance.BattleController.TakeAction(this);
     }
 
-    IEnumerator Attack()
-    {
-        EnemyCharacter enemyCharacter = FindAnyObjectByType<EnemyCharacter>();
-        enemyCharacter.TakeDamage(20);
-        animator.SetTrigger("Attack");
-        yield return new WaitForSeconds(1f);
-        BattleManager.Instance.EndTurn();
-    }
+    
 }

@@ -4,19 +4,31 @@ using System.ComponentModel;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 
+public enum PlayerState { Free, Battle}
+
 public class PlayerController : MonoBehaviour
 {
     
     public static PlayerController Instance { get; private set; }
 
-    PlayerCharacter playerUnit;
+    [Header("Player Battle Components")]
+    [SerializeField]PlayerCharacter playerUnit;
     public PlayerCharacter PlayerUnit { get { return playerUnit; } private set { playerUnit = value; } }
+    PlayerBattleController battleController = new PlayerBattleController();
+    public PlayerBattleController BattleController { get { return battleController; }  }
 
+    [Header("Movement Components")]
     float speed = 3;
     bool isWalking = false;
     Rigidbody2D rb;
-    Animator animator;
     float direction;
+
+    
+    PlayerState playerState = PlayerState.Free;
+    public PlayerState PlayerState { get { return playerState; } set { playerState = value; } }
+
+    Animator animator;
+
 
     private void Awake()
     {
@@ -25,6 +37,7 @@ public class PlayerController : MonoBehaviour
         else
             Instance = this;
     }
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -33,10 +46,13 @@ public class PlayerController : MonoBehaviour
         direction = 1;
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-        Movement();
+        if(playerState == PlayerState.Free)
+            Movement();
+        else if(playerState == PlayerState.Battle)
+            battleController.Update();
 
     }
 

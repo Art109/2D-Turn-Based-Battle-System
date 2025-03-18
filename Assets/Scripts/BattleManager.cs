@@ -35,7 +35,7 @@ public class BattleManager : MonoBehaviour
     public void StartBattle(List<Character> participants)
     {
         if (isBattleActive) return;
-
+        PlayerController.Instance.PlayerState = PlayerState.Battle;
         isBattleActive = true;
         characters.Add(PlayerController.Instance.PlayerUnit);
         foreach (Character character in participants)
@@ -51,6 +51,7 @@ public class BattleManager : MonoBehaviour
         
             if (characters.Count == 0) return;
             Character currentCharacter = characters[currentTurnIndex];
+            BattleUIManager.Instance.UpdateUI(currentCharacter);
             currentCharacter.TakeTurn(this);
     }
 
@@ -63,7 +64,7 @@ public class BattleManager : MonoBehaviour
 
     public void EndBattle()
     {
-
+        BattleUIManager.Instance.DeactiveUI();
     }
 
 }
