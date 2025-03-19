@@ -49,10 +49,10 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
-        if(playerState == PlayerState.Free)
+        if (playerState == PlayerState.Free)
             Movement();
-        else if(playerState == PlayerState.Battle)
-            battleController.Update();
+        else if (playerState == PlayerState.Battle)
+            PlayerBattleController.Instance.PlayerControl();
 
     }
 

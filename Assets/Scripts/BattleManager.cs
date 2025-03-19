@@ -53,6 +53,8 @@ public class BattleManager : MonoBehaviour
             Character currentCharacter = characters[currentTurnIndex];
             BattleUIManager.Instance.UpdateUI(currentCharacter);
             currentCharacter.TakeTurn(this);
+            Debug.Log(characters.Count);
+            Debug.Log(currentCharacter);
     }
 
     public void EndTurn()

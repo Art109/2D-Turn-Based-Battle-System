@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 152023962}
   - component: {fileID: 152023961}
   - component: {fileID: 152023964}
+  - component: {fileID: 152023967}
   - component: {fileID: 152023966}
   - component: {fileID: 152023965}
   m_Layer: 0
@@ -287,6 +288,18 @@ MonoBehaviour:
   hp: 100
   speed: 2
   skills: []
+--- !u!114 &152023967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152023960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 475f5927cae5ed049bbfdea523503d66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &164157430
 GameObject:
   m_ObjectHideFlags: 0
@@ -1153,7 +1166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characters: []
-  enemyTest: {fileID: 0}
+  enemyTest: {fileID: 1857129282}
 --- !u!1 &1857129278
 GameObject:
   m_ObjectHideFlags: 0

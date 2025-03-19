@@ -13,7 +13,7 @@ public class PlayerCharacter : Character
 
     public override void TakeTurn(BattleManager battleManager)
     {
-        PlayerController.Instance.BattleController.TakeAction(this);
+        PlayerBattleController.Instance.TakeAction(this);
     }
 
     
