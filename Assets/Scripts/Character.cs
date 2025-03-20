@@ -5,14 +5,15 @@ using UnityEngine;
 public abstract class Character : MonoBehaviour
 {
     [SerializeField] string characterName;
-    [SerializeField] int hp;
+    [SerializeField] protected float maxHp;
+    [SerializeField] protected float currentHP;
     public int speed;
     [SerializeField] List<Skill> skills;
 
     public virtual void TakeTurn(BattleManager battleManager) { }
 
-    public void TakeDamage(int damage) 
+    public virtual void TakeDamage(int damage) 
     {
-        hp -= damage;
+        currentHP -= damage;
     }
 }

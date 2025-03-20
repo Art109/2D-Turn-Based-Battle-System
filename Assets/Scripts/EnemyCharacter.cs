@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.ConstrainedExecution;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyCharacter : Character
 {
     Animator animator;
-    
+
+    [SerializeField] Image hpBar; 
 
     private void Start()
     {
         animator = GetComponent<Animator>();
+        currentHP = maxHp;
     }
 
     public override void TakeTurn(BattleManager battleManager)
@@ -28,5 +31,16 @@ public class EnemyCharacter : Character
         BattleManager.Instance.EndTurn();
     }
 
-   
+    public override void TakeDamage(int damage)
+    {
+        base.TakeDamage(damage);
+        UpdateHpUi();
+    }
+
+    void UpdateHpUi()
+    {
+        hpBar.fillAmount = currentHP/maxHp;
+    }
+
+
 }
