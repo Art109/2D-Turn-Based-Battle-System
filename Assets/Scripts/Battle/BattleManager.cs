@@ -23,12 +23,7 @@ public class BattleManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            List<Character> enemy = new List<Character>();
-            enemy.Add(enemyTest);    
-            StartBattle(enemy);
-        }
+    
     }
 
 

@@ -77,6 +77,12 @@ public class PlayerController : MonoBehaviour
 
 
     }
+
+    public void StopMovement()
+    {
+        rb.velocity = Vector3.zero;
+        animator.SetBool("isWalking", false);
+    }
     
     void Flip()
     {

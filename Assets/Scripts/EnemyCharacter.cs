@@ -10,6 +10,8 @@ public class EnemyCharacter : Character
 
     [SerializeField] Image hpBar; 
 
+    public List<Character> enemyParty;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
