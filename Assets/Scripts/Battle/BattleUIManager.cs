@@ -11,7 +11,6 @@ public class BattleUIManager : MonoBehaviour
     [SerializeField] GameObject playerOptionsBox;
     [SerializeField] List<TextMeshProUGUI> playerOptions;
     [SerializeField] GameObject playerHUD;
-    [SerializeField] List<GameObject> playerCharactersHUD;
     [SerializeField] GameObject battleTextPanel;
     [SerializeField] TextMeshProUGUI battleText;
 

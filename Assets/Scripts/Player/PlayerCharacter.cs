@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerCharacter : Character
@@ -16,5 +17,11 @@ public class PlayerCharacter : Character
         PlayerBattleController.Instance.TakeAction(this);
     }
 
-    
+    public override void TakeDamage(int damage)
+    {
+        base.TakeDamage(damage);
+        PlayerBattlePartyHUD.Instance.UpdateHP(this);
+    }
+
+
 }

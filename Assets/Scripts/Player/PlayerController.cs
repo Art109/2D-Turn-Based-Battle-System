@@ -14,11 +14,11 @@ public class PlayerController : MonoBehaviour
     [Header("Player Battle Components")]
     [SerializeField]PlayerCharacter playerUnit;
     public PlayerCharacter PlayerUnit { get { return playerUnit; } private set { playerUnit = value; } }
-    PlayerBattleController battleController = new PlayerBattleController();
-    public PlayerBattleController BattleController { get { return battleController; }  }
+    List<PlayerCharacter> playerParty;
+    public List<PlayerCharacter> PlayerParty { get { return playerParty; } private set { PlayerParty = value; } }
 
     [Header("Movement Components")]
-    float speed = 3;
+    [SerializeField]float speed = 3;
     bool isWalking = false;
     Rigidbody2D rb;
     float direction;
@@ -44,6 +44,8 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         PlayerUnit = GetComponent<PlayerCharacter>();
         direction = 1;
+        playerParty = new List<PlayerCharacter>();
+        playerParty.Add(playerUnit);
     }
 
     
