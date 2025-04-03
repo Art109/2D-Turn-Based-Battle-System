@@ -24,11 +24,6 @@ public class BattleUIManager : MonoBehaviour
             Instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void UpdateUI(Character character) 
     {

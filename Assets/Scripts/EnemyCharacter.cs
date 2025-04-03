@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class EnemyCharacter : Character
 {
-    Animator animator;
 
     [SerializeField] Image hpBar; 
 
@@ -20,18 +19,20 @@ public class EnemyCharacter : Character
 
     public override void TakeTurn(BattleManager battleManager)
     {
-        StartCoroutine(Attack());
+        PlayerCharacter player = FindAnyObjectByType<PlayerCharacter>();
+        StartCoroutine(Attack(player));
     }
 
 
-    IEnumerator Attack() 
+    /*
+    public override IEnumerator Attack(Character character) 
     { 
-        PlayerCharacter player = FindAnyObjectByType<PlayerCharacter>();
+       
         player.TakeDamage(10);
         animator.SetTrigger("Attack");
         yield return new WaitForSeconds(1f);
         BattleManager.Instance.EndTurn();
-    }
+    }*/
 
     public override void TakeDamage(int damage)
     {

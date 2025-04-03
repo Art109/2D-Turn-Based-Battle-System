@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class PlayerCharacter : Character
 {
-    Animator animator;
 
     private void Start()
     {
@@ -21,6 +20,15 @@ public class PlayerCharacter : Character
     {
         base.TakeDamage(damage);
         PlayerBattlePartyHUD.Instance.UpdateHP(this);
+    }
+
+    public override IEnumerator Attack(Character character)
+    {
+        EnemyCharacter enemyCharacter = FindAnyObjectByType<EnemyCharacter>();
+        enemyCharacter.TakeDamage(20);
+        animator.SetTrigger("Attack");
+        yield return new WaitForSeconds(1f);
+        BattleManager.Instance.EndTurn();
     }
 
 

@@ -21,10 +21,6 @@ public class BattleManager : MonoBehaviour
             Instance = this;
     }
 
-    private void Update()
-    {
-    
-    }
 
 
     public void StartBattle(List<Character> participants)

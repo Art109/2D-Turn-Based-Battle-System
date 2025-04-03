@@ -12,7 +12,6 @@ public class PlayerBattleController :MonoBehaviour
     int actionIndex = 0;
     bool actionSelected = false;
 
-    Animator animator;
 
     private void Awake()
     {
@@ -24,7 +23,7 @@ public class PlayerBattleController :MonoBehaviour
 
     private void Start()
     {
-        animator = GetComponent<Animator>();
+        
     }
 
     public void PlayerControl()
@@ -66,27 +65,40 @@ public class PlayerBattleController :MonoBehaviour
             switch (actionIndex)
             { 
                 case 0:
-                    StartCoroutine(Attack());
+                    Attack();
                     break;
                 case 1:
-                    //Skills
+                    Skill();
                     break;
                 case 2:
-                    //Itens
+                    Item();
                     break;
                 case 3:
-                    //Run
+                    Run();
                     break;
             }
         }
     }
 
-    IEnumerator Attack()
+    void Attack()
     {
+        // Target Selection -> Player.Attack
         EnemyCharacter enemyCharacter = FindAnyObjectByType<EnemyCharacter>();
-        enemyCharacter.TakeDamage(20);
-        animator.SetTrigger("Attack");
-        yield return new WaitForSeconds(1f);
-        BattleManager.Instance.EndTurn();
+        StartCoroutine(currentCharacter.Attack(enemyCharacter));
+    }
+
+    void Skill()
+    {
+        //Skill Selection -> TypeVerifier -> TargetSelection -> Player.Skill
+    }
+
+    void Item()
+    {
+        //Item Selection -> ItemTypeVerifier -> UseSelection -> If ItemActionHaveTarget(Target Selection) -> ReturnActionSelection
+    }
+
+    void Run()
+    {
+        //EnemyVerify -> TryRun -> If Sucess EndBattle Else End Turn
     }
 }
