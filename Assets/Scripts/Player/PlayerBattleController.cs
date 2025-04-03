@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+
+public enum PlayerBattleSelectionState { NO_Selection, AttackSelection, SkillSelection, ItemSelection, RunSelection}
+
 public class PlayerBattleController :MonoBehaviour
 {
     public static PlayerBattleController Instance;
     PlayerCharacter currentCharacter;
     public PlayerCharacter CurrentCharacter { get { return currentCharacter; }}
-
+    PlayerBattleSelectionState selectionState = PlayerBattleSelectionState.NO_Selection;
+   
     int actionIndex = 0;
-    bool actionSelected = false;
 
+
+    List<EnemyCharacter> enemyList = new List<EnemyCharacter>();
 
     private void Awake()
     {
@@ -28,7 +33,17 @@ public class PlayerBattleController :MonoBehaviour
 
     public void PlayerControl()
     {
-        ActionSelection();
+        if (selectionState == PlayerBattleSelectionState.NO_Selection)
+            ActionSelection();
+        else if (selectionState == PlayerBattleSelectionState.AttackSelection)
+            Attack();
+        else if (selectionState == PlayerBattleSelectionState.SkillSelection)
+            Skill();
+        else if (selectionState == PlayerBattleSelectionState.ItemSelection)
+            Item();
+        else if (selectionState == PlayerBattleSelectionState.RunSelection)
+            Run();
+
     }
 
     public void TakeAction(PlayerCharacter character)
@@ -36,12 +51,11 @@ public class PlayerBattleController :MonoBehaviour
         
         currentCharacter = character;
         BattleUIManager.Instance.UpdatePlayerActions(currentCharacter);
-        actionSelected = false;
+        selectionState = PlayerBattleSelectionState.NO_Selection;
     }
 
     void ActionSelection()
     {
-        if (actionSelected) return;
             
         if(Input.GetKeyDown(KeyCode.UpArrow))
         {
@@ -61,30 +75,64 @@ public class PlayerBattleController :MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            actionSelected = true;
             switch (actionIndex)
             { 
                 case 0:
-                    Attack();
+                    selectionState = PlayerBattleSelectionState.AttackSelection;
                     break;
                 case 1:
-                    Skill();
+                    selectionState = PlayerBattleSelectionState.SkillSelection;
                     break;
                 case 2:
-                    Item();
+                    selectionState = PlayerBattleSelectionState.AttackSelection;
                     break;
                 case 3:
-                    Run();
+                    selectionState = PlayerBattleSelectionState.AttackSelection;
                     break;
             }
         }
     }
 
+    bool initializedParams = false;
+    EnemyCharacter enemyCharacterTargeted;
+    
+
     void Attack()
     {
         // Target Selection -> Player.Attack
-        EnemyCharacter enemyCharacter = FindAnyObjectByType<EnemyCharacter>();
-        StartCoroutine(currentCharacter.Attack(enemyCharacter));
+        if (!initializedParams)
+        {
+            enemyList = BattleManager.Instance.GetEnemyList();
+            enemyCharacterTargeted = null;
+            
+            Debug.Log("Lista de inimigos" + enemyList);
+        }
+        
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            actionIndex--;
+            if(actionIndex < 0)
+                actionIndex = enemyList.Count - 1;
+            Debug.Log(actionIndex);
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            actionIndex++;
+            if (actionIndex >= enemyList.Count)
+                actionIndex = 0;
+            Debug.Log(actionIndex);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            enemyCharacterTargeted = enemyList[actionIndex];
+        }
+
+        Debug.Log("O inimigo selecionado no momento é " + enemyList[actionIndex]);
+
+        if (enemyCharacterTargeted != null)
+            StartCoroutine(currentCharacter.Attack(enemyCharacterTargeted));
     }
 
     void Skill()

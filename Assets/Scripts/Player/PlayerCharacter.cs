@@ -24,8 +24,7 @@ public class PlayerCharacter : Character
 
     public override IEnumerator Attack(Character character)
     {
-        EnemyCharacter enemyCharacter = FindAnyObjectByType<EnemyCharacter>();
-        enemyCharacter.TakeDamage(20);
+        character.TakeDamage(20);
         animator.SetTrigger("Attack");
         yield return new WaitForSeconds(1f);
         BattleManager.Instance.EndTurn();

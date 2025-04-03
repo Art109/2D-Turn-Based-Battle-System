@@ -11,7 +11,6 @@ public class BattleManager : MonoBehaviour
 
     bool isBattleActive = false;
 
-    [SerializeField] EnemyCharacter enemyTest;
 
     private void Awake()
     {
@@ -20,8 +19,6 @@ public class BattleManager : MonoBehaviour
         else
             Instance = this;
     }
-
-
 
     public void StartBattle(List<Character> participants)
     {
@@ -78,7 +75,16 @@ public class BattleManager : MonoBehaviour
         PlayerController.Instance.PlayerState = PlayerState.Free;
     }
 
-    
+    public List<EnemyCharacter> GetEnemyList()
+    {
+        List<EnemyCharacter> enemyList = new List<EnemyCharacter>();
+        foreach (Character character in characters) 
+        { 
+            if(character is EnemyCharacter enemy)
+                enemyList.Add(enemy);
+        }
+        return enemyList;
+    }
 
     public void CharacterDeath(Character character)
     {
