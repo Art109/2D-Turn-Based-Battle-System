@@ -37,15 +37,31 @@ public class BattleManager : MonoBehaviour
         StartTurn();
     }
 
+    void VerifyBattleState()
+    {
+        if(characters.Count == 1 && characters[0] is PlayerCharacter)
+            isBattleActive = false ;
+        else
+            isBattleActive = true;
+    }
+
     void StartTurn()
     {
-        
+        VerifyBattleState();
+        if (isBattleActive)
+        {
             if (characters.Count == 0) return;
             Character currentCharacter = characters[currentTurnIndex];
             BattleUIManager.Instance.UpdateUI(currentCharacter);
             currentCharacter.TakeTurn(this);
             Debug.Log(characters.Count);
-            Debug.Log(currentCharacter);
+        }
+        else
+        {
+            EndBattle();
+        }
+            
+           
     }
 
     public void EndTurn()
@@ -58,6 +74,19 @@ public class BattleManager : MonoBehaviour
     public void EndBattle()
     {
         BattleUIManager.Instance.DeactiveUI();
+        isBattleActive = false;
+        PlayerController.Instance.PlayerState = PlayerState.Free;
+    }
+
+    
+
+    public void CharacterDeath(Character character)
+    {
+        if (characters.Contains(character))
+        {
+            characters.Remove(character);
+        }
+        
     }
 
 }

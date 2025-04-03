@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.ConstrainedExecution;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,12 +39,27 @@ public class EnemyCharacter : Character
     {
         base.TakeDamage(damage);
         UpdateHpUi();
+        if (currentHP <= 0)
+        {
+           StartCoroutine(Death());
+        }
+        
     }
 
     void UpdateHpUi()
     {
         hpBar.fillAmount = currentHP/maxHp;
     }
+
+    IEnumerator Death()
+    {
+        animator.SetTrigger("Death");
+        BattleManager.Instance.CharacterDeath(this);
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length) ;
+        Destroy(gameObject);
+    }
+
+   
 
 
 }
