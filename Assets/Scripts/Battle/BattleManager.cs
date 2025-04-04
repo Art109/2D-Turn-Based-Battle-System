@@ -23,6 +23,7 @@ public class BattleManager : MonoBehaviour
     public void StartBattle(List<Character> participants)
     {
         if (isBattleActive) return;
+        characters.Clear();
         PlayerController.Instance.PlayerState = PlayerState.Battle;
         isBattleActive = true;
         characters.Add(PlayerController.Instance.PlayerUnit);

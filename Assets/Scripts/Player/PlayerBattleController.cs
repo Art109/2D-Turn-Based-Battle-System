@@ -84,10 +84,10 @@ public class PlayerBattleController :MonoBehaviour
                     selectionState = PlayerBattleSelectionState.SkillSelection;
                     break;
                 case 2:
-                    selectionState = PlayerBattleSelectionState.AttackSelection;
+                    selectionState = PlayerBattleSelectionState.ItemSelection;
                     break;
                 case 3:
-                    selectionState = PlayerBattleSelectionState.AttackSelection;
+                    selectionState = PlayerBattleSelectionState.RunSelection;
                     break;
             }
         }
@@ -127,12 +127,19 @@ public class PlayerBattleController :MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z))
         {
             enemyCharacterTargeted = enemyList[actionIndex];
+            actionIndex = 0;
+            if (enemyCharacterTargeted != null)
+                StartCoroutine(currentCharacter.Attack(enemyCharacterTargeted));
+        }
+        else if (Input.GetKeyDown(KeyCode.X))
+        {
+            actionIndex = 0;
+            selectionState = PlayerBattleSelectionState.NO_Selection;
         }
 
         Debug.Log("O inimigo selecionado no momento é " + enemyList[actionIndex]);
 
-        if (enemyCharacterTargeted != null)
-            StartCoroutine(currentCharacter.Attack(enemyCharacterTargeted));
+        
     }
 
     void Skill()
@@ -148,5 +155,18 @@ public class PlayerBattleController :MonoBehaviour
     void Run()
     {
         //EnemyVerify -> TryRun -> If Sucess EndBattle Else End Turn
+        enemyList = BattleManager.Instance.GetEnemyList();
+        int succesChance = 100/enemyList.Count;
+        int randomNumber = Random.Range(0, 100);
+
+        if (randomNumber > succesChance) 
+        {
+            Debug.Log("Fail to escape");
+            BattleManager.Instance.EndTurn();
+        }
+        else
+        {
+            BattleManager.Instance.EndBattle();
+        }
     }
 }
