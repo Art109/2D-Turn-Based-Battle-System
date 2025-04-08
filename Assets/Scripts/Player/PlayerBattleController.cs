@@ -137,7 +137,7 @@ public class PlayerBattleController :MonoBehaviour
             selectionState = PlayerBattleSelectionState.NO_Selection;
         }
 
-        Debug.Log("O inimigo selecionado no momento é " + enemyList[actionIndex]);
+        //Debug.Log("O inimigo selecionado no momento é " + enemyList[actionIndex]);
 
         
     }
